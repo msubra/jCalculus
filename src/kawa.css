@@ -1,0 +1,75 @@
+.string{
+font-family:Courier New;
+color:#990000;
+font:normal;
+font-size: 10pt;
+}
+.chars{
+font-family:courier new;
+color:#990000;
+font:normal;
+font-size: 10pt;
+}
+.docComment{
+font-family:lucida console;
+color:#0002E8;
+font:normal;
+font-size: 8pt;
+}
+.sourceCode{
+font-family:courier;
+color:black;
+font:normal;
+font-size: 10pt;
+background-color : fff5ee;
+}
+.bracket{
+font-family:courier new;
+color:black;
+font:normal;
+font-size: 10pt;
+}
+.border{
+font-family:lucida console;
+color:black;
+font:normal;
+font-size: 10pt;
+BORDER-RIGHT: #6699cc 1px solid; BORDER-TOP:#6699cc 1px solid;BORDER-LEFT:#6699cc 1px solid; BORDER-BOTTOM: #6699cc 1px solid;
+}
+.operator{
+font-family:Courier New;
+color:#000000;
+font:normal;
+font-size: 10pt;
+}
+.datatype{
+font-family:courier new;
+color:#c00000;
+font:bold;
+font-size: 10pt;
+}
+.sourceTitle{
+font-family:tahoma;
+color:black;
+font:bold;
+font-size: 10pt;
+background-color : ffcc00;
+}
+.keyword{
+font-family:courier new;
+color:#0000c0;
+font:bold;
+font-size: 10pt;
+}
+.number{
+font-family:Courier New;
+color:#990000;
+font:normal;
+font-size: 10pt;
+}
+.comment{
+font-family:lucida console;
+color:#008000;
+font:italic;
+font-size: 10pt;
+}

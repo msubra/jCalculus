@@ -1,0 +1,188 @@
+<?xml version="1.0"?>
+
+<project name="Calculus" basedir="." default="compile">
+    <!-- grab the properties file -->
+
+    	<property file="build.properties" />
+	<property name="config" value="config"/>
+
+    <!-- include all the jars in the classpath -->
+
+	<path id="classpath">
+		<fileset dir="." >
+		<include name="**/*.jar" />
+		</fileset>
+	</path>
+
+	<target name="init" depends="">
+		<mkdir dir="${build.dest}"/>
+	</target>
+
+    <!-- ================================================================= -->
+    <!-- E N V                                                             -->
+    <!-- ================================================================= -->
+	<target name="env" depends="init" >
+		<echo message="java.home = ${java.home}" />
+		<echo message="user.home = ${user.home}" />
+	</target>
+    <!-- ================================================================= -->
+    <!-- C O M P I L E                                                     -->
+    <!-- ================================================================= -->
+	<target name="compile" depends="env">
+		<javac srcdir="${build.src}"
+		       destdir="${build.dest}"
+		       debug="${debug}"
+		       deprecation="${deprecation}"
+		       optimize="${optimize}">
+			<classpath refid="classpath" />
+		</javac>
+	</target>
+
+	<!-- ================================================================= -->
+	<!-- JavaDoc                                                           -->
+	<!-- ================================================================= -->
+	<target name="javadoc" depends="init">
+		<mkdir dir="${javadoc}"/>
+
+		<javadoc destdir="${javadoc}"
+			Author="true"
+			version="true"
+			packagenames="${packages}"
+			failonerror="false"
+			sourcepath="${build.src}"
+			classpath="${lib}/gnuprolog.jar"
+			use="true"
+			>
+		</javadoc>
+	</target>
+
+    <!-- ================================================================= -->
+    <!-- J A R                                                              -->
+    <!-- ================================================================= -->
+	<target name="jar" depends="compile">
+		<jar jarfile="lib/${final.name}.jar"
+		     compress="true"
+		     basedir="${build.dest}">
+
+             <manifest>
+                        <attribute name="Class-Path"
+                        value="gnuprolog.jar calculus.pl" />
+
+                        <attribute name="Created-By"
+                        value="${user.info}" />
+
+              </manifest>
+        </jar>
+	</target>
+
+    <!-- ================================================================= -->
+    <!-- D I S T R I B U T I O N                                                             -->
+    <!-- ================================================================= -->
+
+	<target name="src-dist" depends="compile,javadoc">
+		<mkdir dir="${dist.zip}"/>
+		<mkdir dir="${dist.tar}"/>
+
+		<delete file="${dist.tar}/${final.name}.tar" />
+		<delete file="${dist.zip}/${final.name}.zip" />
+
+		<tar destfile="${dist.tar}/${final.name}.tar">
+
+			<tarfileset dir="${build.dir}"
+				preserveLeadingSlashes="true"
+				prefix="${final.name}/">
+
+				<include name="LICENSE.txt"/>
+				<include name="README.txt"/>
+				<include name="build.xml"/>
+				<include name="run.bat"/>
+				<include name="build.properties"/>
+				<include name="src/**"/>
+				<include name="lib/**"/>
+				<include name="classes/**"/>
+				<include name="docs/**"/>
+			</tarfileset>
+
+		</tar>
+
+		<gzip src="${dist.tar}/${final.name}.tar"
+			zipfile="${dist.tar}/${final.name}.tar.gz"/>
+
+		<delete file="${dist.tar}/${final.name}.tar" />
+
+		<zip destfile="${dist.zip}/${final.name}.zip">
+
+			<zipfileset dir="${build.dir}"
+				prefix="${final.name}/">
+
+				<include name="LICENSE.txt"/>
+				<include name="README.txt"/>
+				<include name="build.xml"/>
+				<include name="run.bat"/>
+				<include name="build.properties"/>
+				<include name="src/**"/>
+				<include name="lib/**"/>
+				<include name="classes/**"/>
+				<include name="docs/**"/>
+			</zipfileset>
+		</zip>
+	</target>
+
+    <!-- ================================================================= -->
+    <!-- B I N A R Y D I S T R I B U T I O N                                                             -->
+    <!-- ================================================================= -->
+
+	<target name="binary-dist" depends="compile,jar">
+		<mkdir dir="${web.zip}"/>
+		<mkdir dir="${web.tar}"/>
+
+		<delete file="${web.tar}/${final.name}.tar" />
+		<delete file="${web.zip}/${final.name}.zip" />
+
+		<tar destfile="${web.tar}/${final.name}.tar">
+
+			<tarfileset dir="${build.dir}"
+				preserveLeadingSlashes="true"
+				prefix="${final.name}/">
+
+				<include name="jCalculus.jar"/>
+				<include name="lib/**"/>
+				<include name="run.bat"/>
+			</tarfileset>
+
+		</tar>
+
+		<gzip src="${web.tar}/${final.name}.tar"
+			zipfile="${web.tar}/${final.name}.tar.gz"/>
+
+		<delete file="${web.tar}/${final.name}.tar" />
+
+		<zip destfile="${web.zip}/${final.name}.zip">
+
+			<zipfileset dir="${build.dir}"
+				prefix="${final.name}/">
+
+				<include name="jCalculus.jar"/>
+				<include name="lib/**"/>
+				<include name="run.bat"/>
+			</zipfileset>
+		</zip>
+	</target>
+
+	<target name="all" depends="src-dist,binary-dist,clean">
+	</target>
+
+	<target name="clean" depends="">
+		<delete dir="${build.dest}"/>
+		<delete dir="${javadoc}"/>
+	</target>
+
+	<target name="clean-all" depends="">
+		<delete dir="${build.dest}"/>
+		<delete dir="${javadoc}"/>
+		<delete dir="${dist.dir}"/>
+		<delete dir="${web.dir}" />
+
+	</target>
+
+</project>
