@@ -1,8 +1,8 @@
-==========================================================================	
-			jCalculus - Mathematical Calculus Package
-==========================================================================
 
-*Note: This library is no more maintained and it was created as part of my final year project.*
+# jCalculus - Mathematical Calculus Package
+
+
+**Note: This library is no more maintained and it was created as part of my final year project.**
 
 jCalculus, is Prolog + Java interface package. The calculus source is written in Prolog and it is interfaced using gnuprolog, with Java.
 
